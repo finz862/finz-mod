@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>SENSIX FREE FIRE DNK</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: red;
+    font-family: monospace;
+    overflow: hidden;
+}
+
+/* MATRIX CANVAS */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* MENU BOX */
+.menu {
+    position: relative;
+    z-index: 1;
+    width: 300px;
+    margin: 80px auto;
+    padding: 15px;
+    border: 2px solid red;
+    background: rgba(0,0,0,0.85);
+    box-shadow: 0 0 20px red;
+}
+
+.menu h1 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: black;
+    border: 1px solid red;
+    color: red;
+    font-size: 14px;
+}
+
+button.on {
+    background: red;
+    color: black;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="menu">
+    <h1>SENSIX FREE FIRE DNK</h1>
+
+    <button onclick="toggle(this)">Badan HS : OFF</button>
+    <button onclick="toggle(this)">Aimbot : OFF</button>
+    <button onclick="toggle(this)">Holo : OFF</button>
+    <button onclick="toggle(this)">Anti BL : OFF</button>
+    <button onclick="toggle(this)">Anti Band : OFF</button>
+</div>
+
+<script>
+// TOGGLE BUTTON
+function toggle(btn) {
+    if (btn.classList.contains("on")) {
+        btn.classList.remove("on");
+        btn.textContent = btn.textContent.replace("ON", "OFF");
+    } else {
+        btn.classList.add("on");
+        btn.textContent = btn.textContent.replace("OFF", "ON");
+    }
+}
+
+// MATRIX EFFECT
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01";
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = Array.from({length: columns}).fill(1);
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "red";
+    ctx.font = fontSize + "px monospace";
+
+    drops.forEach((y, i) => {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, y * fontSize);
+
+        if (y * fontSize > canvas.height && Math.random() > 0.95) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    });
+}
+
+setInterval(drawMatrix, 50);
+</script>
+
+</body>
+</html>
